@@ -12,9 +12,14 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from t_penjualan'); // Mengambil semua data dari tabel m_level
+        // DB FACADE
+        // $data = DB::select('select * from t_penjualan'); // Mengambil semua data dari tabel t_penjualan
+        // return view('penjualan.index', ['data' => $data]);
+
+        //QUERY BUILDER
+        $data = DB::table('t_penjualan')->get(); // Mengambil semua data dari tabel t_penjualan
         return view('penjualan.index', ['data' => $data]);
+
     }
 
     /**

@@ -12,9 +12,14 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from m_supplier'); // Mengambil semua data dari tabel m_level
+        // DB FACADE
+        // $data = DB::select('select * from m_supplier'); // Mengambil semua data dari tabel m_supplier
+        // return view('supplier.index', ['data' => $data]);
+
+        //QUERY BUILDER
+        $data = DB::table('m_supplier')->get(); // Mengambil semua data dari tabel m_supplier
         return view('supplier.index', ['data' => $data]);
+
     }
 
     /**

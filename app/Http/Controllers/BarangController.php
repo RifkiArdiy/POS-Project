@@ -12,9 +12,14 @@ class BarangController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from m_barang'); // Mengambil semua data dari tabel m_level
+        // DB FACADE
+        // $data = DB::select('select * from m_barang'); // Mengambil semua data dari tabel m_barang
+        // return view('barang.index', ['data' => $data]);
+
+        //QUERY BUILDER
+        $data = DB::table('m_barang')->get(); // Mengambil semua data dari tabel m_barang
         return view('barang.index', ['data' => $data]);
+
     }
 
     /**

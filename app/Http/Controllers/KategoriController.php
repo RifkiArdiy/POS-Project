@@ -12,9 +12,14 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from m_kategori'); // Mengambil semua data dari tabel m_level
+        // // DB FACADE
+        // $data = DB::select('select * from m_kategori'); // Mengambil semua data dari tabel m_kategori
+        // return view('kategori.index', ['data' => $data]);
+
+        //QUERY BUILDER
+        $data = DB::table('m_kategori')->get(); // Mengambil semua data dari tabel m_kategori
         return view('kategori.index', ['data' => $data]);
+
     }
 
     /**

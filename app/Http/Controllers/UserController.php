@@ -12,8 +12,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from m_user'); // Mengambil semua data dari tabel m_level
+        //DB FACADE
+        // $data = DB::select('select * from m_user'); // Mengambil semua data dari tabel m_user
+        // return view('user.index', ['data' => $data]);
+        
+        //QUERY BUILDER
+        $data = DB::table('m_user')->get(); // Mengambil semua data dari tabel m_user
         return view('user.index', ['data' => $data]);
     }
 

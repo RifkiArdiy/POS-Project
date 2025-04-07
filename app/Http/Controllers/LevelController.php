@@ -12,9 +12,14 @@ class LevelController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from m_level'); // Mengambil semua data dari tabel m_level
+        // DB FACADE
+        // $data = DB::select('select * from m_level'); // Mengambil semua data dari tabel m_level
+        // return view('level.index', ['data' => $data]);
+
+        //QUERY BUILDER
+        $data = DB::table('m_level')->get(); // Mengambil semua data dari tabel m_level
         return view('level.index', ['data' => $data]);
+
     }
 
     /**

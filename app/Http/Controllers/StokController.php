@@ -12,9 +12,14 @@ class StokController extends Controller
      */
     public function index()
     {
-        //
-        $data = DB::select('select * from t_stok'); // Mengambil semua data dari tabel m_level
+        //DB FACADE
+        // $data = DB::select('select * from t_stok'); // Mengambil semua data dari tabel t_stok
+        // return view('stok.index', ['data' => $data]);
+        
+        //QUERY BUILDER
+        $data = DB::table('t_stok')->get(); // Mengambil semua data dari tabel t_stok
         return view('stok.index', ['data' => $data]);
+
     }
 
     /**
