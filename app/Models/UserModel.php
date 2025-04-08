@@ -15,4 +15,19 @@ class UserModel extends Model
 
     protected $fillable = ['level_id', 'username', 'nama', 'password'];
 
+    public function level()
+    {
+        return $this->belongsTo(LevelModel::class, 'level_id');
+    }
+
+    public function stok()
+    {
+        return $this->hasMany(StokModel::class, 'user_id');
+    }
+
+    public function penjualans()
+    {
+        return $this->hasMany(PenjualanDetailModel::class, 'user_id');
+    }
+
 }
