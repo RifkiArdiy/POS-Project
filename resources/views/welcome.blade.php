@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -130,4 +130,15 @@
             </div>
         </div>
     </body>
-</html>
+</html> --}}
+
+
+@extends('layouts.template')
+
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Hallo Apakabs</h3>
+        </div>
+    </div>
+@endsection

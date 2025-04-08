@@ -8,6 +8,7 @@ use App\Http\Controllers\PenjualanDetailController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Database\Query\IndexHint;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +23,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.template');
-});
+// Route::get('/', function () {
+//     return view('layouts.template');
+// });
+
+Route::get('/', [WelcomeController::class, 'index']);
 
 Route::get('/level', [LevelController::class, 'index']);
 
