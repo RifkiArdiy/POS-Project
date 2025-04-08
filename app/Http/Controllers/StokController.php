@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StokModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,13 @@ class StokController extends Controller
         //DB FACADE
         // $data = DB::select('select * from t_stok'); // Mengambil semua data dari tabel t_stok
         // return view('stok.index', ['data' => $data]);
-        
+
         //QUERY BUILDER
-        $data = DB::table('t_stok')->get(); // Mengambil semua data dari tabel t_stok
+        // $data = DB::table('t_stok')->get(); // Mengambil semua data dari tabel t_stok
+        // return view('stok.index', ['data' => $data]);
+
+        //ELOQUENT ORM
+        $data = StokModel::all();
         return view('stok.index', ['data' => $data]);
 
     }

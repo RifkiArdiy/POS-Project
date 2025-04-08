@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PenjualanModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,12 @@ class PenjualanController extends Controller
         // return view('penjualan.index', ['data' => $data]);
 
         //QUERY BUILDER
-        $data = DB::table('t_penjualan')->get(); // Mengambil semua data dari tabel t_penjualan
-        return view('penjualan.index', ['data' => $data]);
+        // $data = DB::table('t_penjualan')->get(); // Mengambil semua data dari tabel t_penjualan
+        // return view('penjualan.index', ['data' => $data]);
 
+        //ELOQUENT ORM
+        $data = PenjualanModel::all();
+        return view('penjualan.index', ['data' => $data]);
     }
 
     /**

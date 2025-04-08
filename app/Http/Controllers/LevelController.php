@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LevelModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,12 @@ class LevelController extends Controller
         // return view('level.index', ['data' => $data]);
 
         //QUERY BUILDER
-        $data = DB::table('m_level')->get(); // Mengambil semua data dari tabel m_level
-        return view('level.index', ['data' => $data]);
+        // $data = DB::table('m_level')->get(); // Mengambil semua data dari tabel m_level
+        // return view('level.index', ['data' => $data]);
 
+        //ELOQUENT ORM
+        $data = LevelModel::all();
+        return view('level.index', ['data' => $data]);
     }
 
     /**

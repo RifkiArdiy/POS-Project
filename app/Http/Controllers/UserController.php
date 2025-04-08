@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,8 +18,13 @@ class UserController extends Controller
         // return view('user.index', ['data' => $data]);
         
         //QUERY BUILDER
-        $data = DB::table('m_user')->get(); // Mengambil semua data dari tabel m_user
+        // $data = DB::table('m_user')->get(); // Mengambil semua data dari tabel m_user
+        // return view('user.index', ['data' => $data]);
+        
+        //ELOQUENT ORM
+        $data = UserModel::all();
         return view('user.index', ['data' => $data]);
+
     }
 
     /**

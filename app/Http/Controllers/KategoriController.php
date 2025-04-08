@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KategoriModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,12 @@ class KategoriController extends Controller
         // return view('kategori.index', ['data' => $data]);
 
         //QUERY BUILDER
-        $data = DB::table('m_kategori')->get(); // Mengambil semua data dari tabel m_kategori
-        return view('kategori.index', ['data' => $data]);
+        // $data = DB::table('m_kategori')->get(); // Mengambil semua data dari tabel m_kategori
+        // return view('kategori.index', ['data' => $data]);
 
+        //ELOQUENT ORM
+        $data = KategoriModel::all();
+        return view('kategori.index', ['data' => $data]);
     }
 
     /**

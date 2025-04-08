@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SupplierModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,12 @@ class SupplierController extends Controller
         // return view('supplier.index', ['data' => $data]);
 
         //QUERY BUILDER
-        $data = DB::table('m_supplier')->get(); // Mengambil semua data dari tabel m_supplier
-        return view('supplier.index', ['data' => $data]);
+        // $data = DB::table('m_supplier')->get(); // Mengambil semua data dari tabel m_supplier
+        // return view('supplier.index', ['data' => $data]);
 
+        //ELOQUENT ORM
+        $data = SupplierModel::all();
+        return view('supplier.index', ['data' => $data]);
     }
 
     /**

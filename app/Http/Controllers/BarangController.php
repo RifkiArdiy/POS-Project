@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BarangModel;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,12 @@ class BarangController extends Controller
         // return view('barang.index', ['data' => $data]);
 
         //QUERY BUILDER
-        $data = DB::table('m_barang')->get(); // Mengambil semua data dari tabel m_barang
-        return view('barang.index', ['data' => $data]);
+        // $data = DB::table('m_barang')->get(); // Mengambil semua data dari tabel m_barang
+        // return view('barang.index', ['data' => $data]);
 
+        //ELOQUENT ORM
+        $data = BarangModel::all();
+        return view('barang.index', ['data' => $data]);
     }
 
     /**
