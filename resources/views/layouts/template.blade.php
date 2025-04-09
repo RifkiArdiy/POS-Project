@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
-    
+
     @stack('css')
 </head>
 
@@ -117,9 +117,10 @@
 
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('adminlte/dist/js/demo.js')}}"></script>
+
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    
-    <script src="{{asset('adminlte/dist/js/pages/dashboard2.js')}}"></script>
+    {{--
+    <script src="{{asset('adminlte/dist/js/pages/dashboard2.js')}}"></script> --}}
 
     <script>
         $.ajaxSetup({
