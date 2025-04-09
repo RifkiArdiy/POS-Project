@@ -62,7 +62,7 @@
                             <select class="form-control" id="kategori_id" name="kategori_id">
                                 <option value="">- Semua -</option>
                                 @foreach($kategori as $kat)
-                                    <option value="{{ $kat->kategori_id }}">{{ $kat->nama_kategori }}</option>
+                                    <option value="{{ $kat->kategori_id }}">{{ $kat->kategori_nama }}</option>
                                 @endforeach
                             </select>
                             <small class="form-text text-muted">Filter berdasarkan kategori</small>
@@ -84,6 +84,8 @@
             </table>
         </div>
     </div>
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data backdrop="static"
+        data-keyboard="false" data-width="75%" aria-hidden="true"></div>
 @endsection
 
 @push('css')
@@ -91,6 +93,12 @@
 
 @push('js')
     <script>
+        function modalAction(url = '') {
+            $('#myModal').load(url, function () {
+                $('#myModal').modal('show');
+            });
+        }
+        var dataBarang;
         $(document).ready(function () {
             var dataBarang = $('#table_barang').DataTable({
                 serverSide: true,

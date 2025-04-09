@@ -20,7 +20,7 @@
                     </tr>
                     <tr>
                         <th>Kategori</th>
-                        <td>{{ $barang->kategori->nama_kategori ?? '-' }}</td>
+                        <td>{{ $barang->kategori->kategori_nama ?? '-' }}</td>
                     </tr>
                     <tr>
                         <th>Kode Barang</th>
