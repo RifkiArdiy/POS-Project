@@ -713,6 +713,14 @@
                     <p>Transaksi Penjualan</p>
                 </a>
             </li>
+            <li class="nav-header">Data Supplier</li>
+            <li class="nav-item">
+                <a href="{{ url('/supplier') }}" class="nav-link {{ ($activeMenu == 'supplier') ?
+    'active' : '' }} ">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>Supplier</p>
+                </a>
+            </li>
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

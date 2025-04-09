@@ -36,15 +36,21 @@ class UserController extends Controller
             'title' => 'Daftar user yang terdaftar dalam sistem'
         ];
 
+        $level = LevelModel::all();
         $activeMenu = 'user';
 
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
     }
 
     public function list(Request $request)
     {
         $users = UserModel::select('user_id', 'username', 'nama', 'level_id')
             ->with('level');
+
+        // Filter data berdasarkan level_id
+        if ($request->level_id) {
+            $users->where('level_id', $request->level_id);
+        }
 
         return DataTables::of($users)
             ->addIndexColumn()
@@ -155,7 +161,7 @@ class UserController extends Controller
     {
         //
         $request->validate([
-            'username' => 'required|string|min:3|unique:m_user,username,'.$id.',user_id',
+            'username' => 'required|string|min:3|unique:m_user,username,' . $id . ',user_id',
             // username harus diisi, berupa string, minimal 3 karakter,
             // dan bernilai unik di tabel user kolom username kecuali untuk user dengan id yang sedang diedit
             'nama' => 'required|string|max:100',
@@ -168,7 +174,7 @@ class UserController extends Controller
 
         UserModel::find($id)->update([
             'username' => $request->username,
-            'nama'     => $request->nama,
+            'nama' => $request->nama,
             'password' => $request->password ? bcrypt($request->password) : UserModel::find($id)->password,
             'level_id' => $request->level_id
         ]);
