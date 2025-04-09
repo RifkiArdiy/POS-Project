@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class UserModel extends Model
+class UserModel extends Authenticatable
 {
     use HasFactory;
 
@@ -16,6 +17,10 @@ class UserModel extends Model
     protected $primaryKey = 'user_id';
 
     protected $fillable = ['level_id', 'username', 'nama', 'password'];
+
+    protected $hidden = ['password'];
+    
+    protected $cast = ['password' => 'hashed'];
 
     public function level(): BelongsTo //Menunjukkan bahwa setiap user memiliki relasi belongsTo dengan tabel LevelModel, dihubungkan melalui level_id.
     {
