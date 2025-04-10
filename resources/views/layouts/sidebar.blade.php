@@ -5,7 +5,7 @@
             <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">{{ auth()->user()->nama }}</a>
         </div>
     </div>
 
@@ -698,7 +698,6 @@
                     <p>Data Barang</p>
                 </a>
             </li>
-            <li class="nav-header">Data Transaksi</li>
             <li class="nav-item">
                 <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok') ?
     'active' : '' }} ">
@@ -706,6 +705,7 @@
                     <p>Stok Barang</p>
                 </a>
             </li>
+            <li class="nav-header">Data Transaksi</li>
             <li class="nav-item">
                 <a href="{{ url('/penjualan') }}" class="nav-link {{ ($activeMenu ==
     'penjualan') ? 'active' : '' }} ">
