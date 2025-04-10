@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Yajra\DataTables\Html\Editor\Fields\Boolean;
 
 class UserModel extends Authenticatable
 {
@@ -16,7 +17,7 @@ class UserModel extends Authenticatable
 
     protected $primaryKey = 'user_id';
 
-    protected $fillable = ['level_id', 'username', 'nama', 'password'];
+    protected $fillable = ['username', 'nama', 'password', 'level_id', 'created_at', 'update_at'];
 
     protected $hidden = ['password'];
     
@@ -35,4 +36,13 @@ class UserModel extends Authenticatable
         return $this->hasMany(PenjualanModel::class, 'user_id', 'user_id');
     }
 
+    public function getRoleName(): string
+    {
+        return $this->level->level_nama;
+    }
+
+    public function hasRole($role): bool
+    {
+        return $this->level->level_kode == $role;
+    }
 }
