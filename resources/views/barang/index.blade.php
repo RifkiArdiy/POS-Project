@@ -164,9 +164,10 @@
                 <a href="{{ url('/barang/export_excel') }}" class="btn btn-sm btn-primary"><i class="fa fa-file-excel"></i>
                     Export
                     Barang</a>
-                <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Barang</button>
-                <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-success">Tambah
-                    Data</button>
+                <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-sm btn-info">Import
+                    Barang</button>
+                <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-sm btn-success">Tambah
+                    Barang</button>
             </div>
         </div>
         <div class="card-body">
@@ -244,25 +245,21 @@
                     // data: "No_Urut",
                     data: "DT_RowIndex",
                     className: "text-center",
-                    width: "5%",
                     orderable: false,
                     searchable: false
                 }, {
                     data: "barang_kode",
                     className: "",
-                    width: "10%",
                     orderable: true,
                     searchable: true
                 }, {
                     data: "barang_nama",
                     className: "",
-                    width: "37%",
                     orderable: true,
                     searchable: true,
                 }, {
                     data: "harga_beli",
                     className: "",
-                    width: "10%",
                     orderable: true,
                     searchable: false,
                     render: function (data, type, row) {
@@ -271,7 +268,6 @@
                 }, {
                     data: "harga_jual",
                     className: "",
-                    width: "10%",
                     orderable: true,
                     searchable: false,
                     render: function (data, type, row) {
@@ -280,17 +276,14 @@
                 }, {
                     data: "kategori.kategori_nama",
                     className: "",
-                    width: "14%",
                     orderable: true,
                     searchable: false
                 }, {
                     data: "aksi",
                     className: "text-center",
-                    width: "14%",
                     orderable: false,
                     searchable: false
-                }
-                ]
+                }]
             });
 
             $('#table-barang_filter input').unbind().bind().on('keyup', function (e) {

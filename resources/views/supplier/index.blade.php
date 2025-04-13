@@ -47,9 +47,9 @@
                     Export
                     Supplier</a>
                 <button onclick="modalAction('{{url('supplier/import')}}')" class="btn btn-sm btn-info mt-1">Import
-                    Data</button>
+                    Supplier</button>
                 <button onclick="modalAction('{{url('supplier/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Data</button>
+                    Supplier</button>
             </div>
         </div>
         <div class="card-body">

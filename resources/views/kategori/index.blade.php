@@ -42,15 +42,15 @@
                 <a href="{{ url('/kategori/export_pdf') }}" class="btn btn-sm btn-warning mt-1"><i
                         class="fa fa-file-pdf"></i>
                     Export
-                    Data Kategori</a>
+                    Kategori</a>
                 <a href="{{ url('/kategori/export_excel') }}" class="btn btn-sm btn-primary mt-1"><i
                         class="fa fa-file-excel"></i>
                     Export
-                    Data Kategori</a>
+                    Kategori</a>
                 <button onclick="modalAction('{{url('kategori/import')}}')" class="btn btn-sm btn-info mt-1">Import
-                    Data</button>
+                    Kategori</button>
                 <button onclick="modalAction('{{url('kategori/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Data</button>
+                    Kategori</button>
             </div>
         </div>
         <div class="card-body">

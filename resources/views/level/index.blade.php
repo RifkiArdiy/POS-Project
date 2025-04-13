@@ -44,9 +44,9 @@
                         class="fa fa-file-excel"></i> Export
                     Level</a>
                 <button onclick="modalAction('{{url('level/import')}}')" class="btn btn-sm btn-info mt-1">Import
-                    Data</button>
+                    Level</button>
                 <button onclick="modalAction('{{url('level/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Data</button>
+                    Level</button>
             </div>
         </div>
         <div class="card-body">

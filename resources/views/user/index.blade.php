@@ -12,9 +12,9 @@
                     Export
                     User</a>
                 <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-sm btn-info mt-1">Import
-                    Data</button>
+                    User</button>
                 <button onclick="modalAction('{{url('user/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
-                    Data</button>
+                    User</button>
             </div>
         </div>
         <div class="card-body">
