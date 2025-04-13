@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LevelModel;
 use App\Models\UserModel;
+use Barryvdh\DomPDF\Facade\PDF;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -402,9 +403,9 @@ class UserController extends Controller
             'username',
             'nama',
         )
-        ->orderBy('level_id')
-        ->with('level')
-        ->get();
+            ->orderBy('level_id')
+            ->with('level')
+            ->get();
 
         //load library excel
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
@@ -423,7 +424,7 @@ class UserController extends Controller
             $sheet->setCellValue('A' . $baris, $no);
             $sheet->setCellValue('B' . $baris, $value->username);
             $sheet->setCellValue('C' . $baris, $value->nama);
-            $sheet->setCellValue('D' . $baris, $value->level->level_nama); //ambil nama kategori
+            $sheet->setCellValue('D' . $baris, $value->level->level_nama); //ambil nama user
             $no++;
             $baris++;
         }
@@ -433,7 +434,7 @@ class UserController extends Controller
         }
 
         $sheet->setTitle('Data user'); //set judul sheet
-        $writer = IOFactory ::createWriter($spreadsheet, 'Xlsx'); //set writer
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx'); //set writer
         $filename = 'Data_user_' . date('Y-m-d_H-i-s') . '.xlsx'; //set nama file
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -447,5 +448,26 @@ class UserController extends Controller
 
         $writer->save('php://output'); //simpan file ke output
         exit; //keluar dari scriptA
+    }
+
+    public function export_pdf()
+    {
+        $user = UserModel::select(
+            'level_id',
+            'username',
+            'nama',
+        )
+            ->orderBy('level_id')
+            ->orderBy('username')
+            ->with('level')
+            ->get();
+
+        // use Barryvdh\DomPDF\Facade\Pdf;
+        $pdf = Pdf::loadView('user.export_pdf', ['user' => $user]);
+        $pdf->setPaper('A4', 'portrait'); // set ukuran kertas dan orientasi
+        $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url
+        $pdf->render(); // render pdf
+
+        return $pdf->stream('Data User ' . date('Y-m-d H-i-s') . '.pdf');
     }
 }
