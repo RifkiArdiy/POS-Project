@@ -65,9 +65,13 @@ class BarangController extends Controller
             ->with('kategori'); // relasi ke tabel kategori
 
         // Filter data berdasarkan kategori_id
-        if ($request->kategori_id) {
-            $barang->where('kategori_id', $request->kategori_id);
-        }
+        // if ($request->kategori_id) {
+        //     $barang->where('kategori_id', $request->kategori_id);
+        // }
+
+        if ($request->filter_kategori) {
+            $barang->where('kategori_id', $request->filter_kategori);
+        }        
 
         return DataTables::of($barang)
             ->addIndexColumn() // kolom DT_RowIndex

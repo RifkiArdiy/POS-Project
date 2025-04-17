@@ -178,7 +178,8 @@
                         <div class="form-group form-group-sm row text-sm mb-0">
                             <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
                             <div class="col-md-3">
-                                <select name="filter_kategori" class="form-control form-control-sm filter_kategori">
+                                <select name="filter_kategori" class="form-control form-control-sm filter_kategori"
+                                    id="filter_kategori">
                                     <option value="">- Semua -</option>
                                     @foreach($kategori as $l)
                                         <option value="{{ $l->kategori_id }}">{{ $l->kategori_nama }}</option>
@@ -292,7 +293,7 @@
                 }
             });
 
-            $('.filter_kategori').change(function () {
+            $('#filter_kategori').on('change', function () {
                 tableBarang.draw();
             });
         }); 
