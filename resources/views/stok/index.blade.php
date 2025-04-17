@@ -50,7 +50,7 @@
                     Stok</a>
                 <button onclick="modalAction('{{ url('/stok/import') }}')" class="btn btn-sm btn-info">Import Stok</button>
                 <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-sm btn-success">Tambah
-                    Data</button>
+                    Stok</button>
             </div>
         </div>
         <div class="card-body">
@@ -62,7 +62,6 @@
                             <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
                             <div class="col-md-3">
                                 <select name="filter_supplier" id="filter_supplier" class="form-control form-control-sm filter_supplier">
-                                {{-- <select name="filter_supplier" class="form-control form-control-sm filter_supplier"> --}}
                                     <option value="">- Semua -</option>
                                     @foreach($supplier as $l)
                                         <option value="{{ $l->supplier_id }}">{{ $l->supplier_nama }}</option>
