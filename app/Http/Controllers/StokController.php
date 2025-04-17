@@ -17,7 +17,7 @@ class StokController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
+    {
         //DB FACADE
         // $data = DB::select('select * from t_stok'); // Mengambil semua data dari tabel t_stok
         // return view('stok.index', ['data' => $data]);
@@ -118,5 +118,46 @@ class StokController extends Controller
     {
         //
     }
-    
+
+    public function create_ajax()
+    {
+        $barang = BarangModel::select('barang_id', 'barang_nama')->get();
+        $user = UserModel::select('user_id', 'nama')->get();
+        $supplier = SupplierModel::select('supplier_id', 'supplier_nama')->get();
+        return view('stok.create_ajax', ['barang' => $barang, 'user' => $user, 'supplier' => $supplier]);
+    }
+
+    public function store_ajax(Request $request)
+    {
+        // cek apakah request berupa ajax
+        if ($request->ajax() || $request->wantsJson()) {
+            $rules = [
+                'barang_id' => ['required', 'integer', 'exists:m_barang,barang_id'],
+                'user_id' => ['required', 'integer', 'exists:m_user,user_id'],
+                'supplier_id' => ['required', 'integer', 'exists:m_supplier,supplier_id'], // validasi supplier
+                'stok_tanggal_masuk' => ['required', 'date'],
+                'stok_jumlah' => ['required', 'integer', 'min:1'],
+            ];
+
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false, // response status, false: error/gagal, true: berhasil
+                    'message' => 'Validasi Gagal',
+                    'msgField' => $validator->errors() // pesan error validasi
+                ]);
+            }
+
+            StokModel::create($request->all());
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Data barang berhasil disimpan'
+            ]);
+        }
+
+        redirect('/');
+    }
 }
