@@ -54,10 +54,9 @@ class StokController extends Controller
             ->with('user')
             ->with('supplier');
 
-        // Filter data berdasarkan level_id
-        // if ($request->level_id) {
-        //     $users->where('level_id', $request->level_id);
-        // }
+        if ($request->filter_supplier) {
+            $stoks->where('supplier_id', $request->filter_supplier);
+        }
 
         return DataTables::of($stoks)
             ->addIndexColumn()

@@ -61,13 +61,14 @@
                         <div class="form-group form-group-sm row text-sm mb-0">
                             <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
                             <div class="col-md-3">
-                                <select name="filter_kategori" class="form-control form-control-sm filter_kategori">
+                                <select name="filter_supplier" id="filter_supplier" class="form-control form-control-sm filter_supplier">
+                                {{-- <select name="filter_supplier" class="form-control form-control-sm filter_supplier"> --}}
                                     <option value="">- Semua -</option>
                                     @foreach($supplier as $l)
                                         <option value="{{ $l->supplier_id }}">{{ $l->supplier_nama }}</option>
                                     @endforeach
                                 </select>
-                                <small class="form-text text-muted">Kategori stok</small>
+                                <small class="form-text text-muted">Nama Supplier</small>
                             </div>
                         </div>
                     </div>
@@ -120,9 +121,9 @@
                     "url": "{{ url('stok/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    // "data": function (d) {
-                    //     d.filter_kategori = $('.filter_kategori').val();
-                    // }
+                    "data": function (d) {
+                        d.filter_supplier = $('.filter_supplier').val();
+                    }
                 },
                 columns: [{
                     // data: "No_Urut",
@@ -169,9 +170,9 @@
             //     }
             // });
 
-            // $('.filter_kategori').change(function () {
-            //     tablestok.draw();
-            // });
+            $('#filter_supplier').change(function () {
+                tableStok.draw();
+            });
         }); 
     </script>
 @endpush
