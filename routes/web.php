@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [LevelController::class, 'import_ajax']);
             Route::get('/export_excel', [LevelController::class, 'export_excel']);
             Route::get('/export_pdf', [LevelController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [LevelController::class, 'show_ajax']);
         });
     });
 
@@ -82,6 +83,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [UserController::class, 'import_ajax']);
             Route::get('/export_excel', [UserController::class, 'export_excel']);
             Route::get('/export_pdf', [UserController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [UserController::class, 'show_ajax']);
         });
     });
 
@@ -105,6 +107,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [BarangController::class, 'import_ajax']);
             Route::get('/export_excel', [BarangController::class, 'export_excel']);
             Route::get('/export_pdf', [BarangController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [BarangController::class, 'show_ajax']);
         });
     });
 
@@ -128,6 +131,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [StokController::class, 'import_ajax']);
             Route::get('/export_excel', [StokController::class, 'export_excel']);
             Route::get('/export_pdf', [StokController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [StokController::class, 'show_ajax']);
         });
     });
 
@@ -151,6 +155,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [KategoriController::class, 'import_ajax']);
             Route::get('/export_excel', [KategoriController::class, 'export_excel']);
             Route::get('/export_pdf', [KategoriController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [KategoriController::class, 'show_ajax']);
         });
     });
 
@@ -174,15 +179,16 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
             Route::get('/export_excel', [SupplierController::class, 'export_excel']);
             Route::get('/export_pdf', [SupplierController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [SupplierController::class, 'show_ajax']);
         });
     });
 
     Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::group(['prefix' => 'penjualan'], function () {
-            Route::get('/', [PenjualanController::class, 'index']);
+            Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
             Route::post('/list', [PenjualanController::class, 'list']);
             Route::get('/create', [PenjualanController::class, 'create']);
-            Route::post('/', [PenjualanController::class, 'store']);
+            Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
             Route::get('/create_ajax', [PenjualanController::class, 'create_ajax']);
             Route::post('/ajax', [PenjualanController::class, 'store_ajax']);
             Route::get('/{id}', [PenjualanController::class, 'show']);
@@ -197,6 +203,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [PenjualanController::class, 'import_ajax']);
             Route::get('/export_excel', [PenjualanController::class, 'export_excel']);
             Route::get('/export_pdf', [PenjualanController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [PenjualanController::class, 'show_ajax']);
         });
     });
 
@@ -220,6 +227,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/import_ajax', [PenjualanDetailController::class, 'import_ajax']);
             Route::get('/export_excel', [PenjualanDetailController::class, 'export_excel']);
             Route::get('/export_pdf', [PenjualanDetailController::class, 'export_pdf']);
+            Route::get('/{id}/show_ajax', [PenjualanDetailController::class, 'show_ajax']);
         });
     });
 });
