@@ -82,7 +82,7 @@
             <table class="table table-bordered table-sm table-striped table-hover" id="table-stok">
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th>#</th>
                         <th>Nama Barang</th>
                         <th>Nama User</th>
                         <th>Nama Supplier</th>

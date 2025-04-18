@@ -63,7 +63,7 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Kode kategori</th>
                         <th>Nama kategori</th>
                         <th>Aksi</th>

@@ -82,7 +82,7 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_penjualan_detail">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Kode Penjualan</th>
                         <th>Barang</th>
                         <th>Jumlah Barang</th>

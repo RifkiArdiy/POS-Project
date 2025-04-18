@@ -200,7 +200,7 @@
             <table class="table table-bordered table-sm table-striped table-hover" id="table-barang">
                 <thead>
                     <tr>
-                        <th>No</th>
+                        <th>#</th>
                         <th>Kode Barang</th>
                         <th>Kode Barang</th>
                         <th>Harga Beli</th>
