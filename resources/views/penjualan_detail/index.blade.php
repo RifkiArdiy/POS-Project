@@ -48,12 +48,12 @@
                         class="fa fa-file-excel"></i>
                     Export
                     Penjualan Detail</a>
-                <button onclick="modalAction('{{ url('/penjualan_detail/import') }}')"
+                {{-- <button onclick="modalAction('{{ url('/penjualan_detail/import') }}')"
                     class="btn btn-sm btn-info mt-1">Import
                     Penjualan Detail</button>
                 <button onclick="modalAction('{{url('penjualan_detail/create_ajax')}}')"
-                    class="btn btn-sm btn-success mt-1">Tambah
-                    Penjualan Detail</button>
+                    class="btn btn-sm btn-success mt-1"><i class="fa fa-plus"></i>Tambah
+                    Penjualan Detail</button> --}}
             </div>
         </div>
         <div class="card-body">

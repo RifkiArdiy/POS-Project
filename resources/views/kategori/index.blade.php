@@ -49,7 +49,8 @@
                     Kategori</a>
                 <button onclick="modalAction('{{url('kategori/import')}}')" class="btn btn-sm btn-info mt-1">Import
                     Kategori</button>
-                <button onclick="modalAction('{{url('kategori/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
+                <button onclick="modalAction('{{url('kategori/create_ajax')}}')" class="btn btn-sm btn-success mt-1"><i
+                        class="fa fa-plus"></i>Tambah
                     Kategori</button>
             </div>
         </div>

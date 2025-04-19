@@ -54,9 +54,9 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {{ in_array($activeMenu, ['kategori', 'barang', 'stok']) ? 'menu-open' : '' }}">
+            <li class="nav-item {{ in_array($activeMenu, ['kategori', 'barang']) ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ in_array($activeMenu, ['kategori', 'barang', 'stok']) ? 'active' : '' }}">
+                    class="nav-link {{ in_array($activeMenu, ['kategori', 'barang']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-boxes"></i>
                     <p>
                         Barang
@@ -77,17 +77,11 @@
                             <p>Data Barang</p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Stok Barang</p>
-                        </a>
-                    </li>
                 </ul>
             </li>
-            <li class="nav-item {{ in_array($activeMenu, ['penjualan', 'penjualan_detail']) ? 'menu-open' : '' }}">
+            <li class="nav-item {{ in_array($activeMenu, ['penjualan', 'stok', 'penjualan_detail']) ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ in_array($activeMenu, ['penjualan', 'penjualan_detail']) ? 'active' : '' }}">
+                    class="nav-link {{ in_array($activeMenu, ['penjualan', 'stok', 'penjualan_detail']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-shopping-cart"></i>
                     <p>
                         Transaksi
@@ -103,10 +97,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok') ? 'active' : '' }}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Stok Masuk</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url('/penjualan_detail') }}"
                             class="nav-link {{ ($activeMenu == 'penjualan_detail') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Penjualan Detail</p>
+                            <p>Stok Keluar</p>
                         </a>
                     </li>
                 </ul>
@@ -116,17 +116,6 @@
                     <i class="nav-icon fas fa-box"></i>
                     <p>Data Supplier</p>
                 </a>
-            </li>
-            <li class="nav-header">Keluar</li>
-            <li class="nav-item">
-                <a href="#" class="nav-link"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="nav-icon fas fa-sign-out-alt"></i>
-                    <p>Logout</p>
-                </a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
             </li>
         </ul>
     </nav>

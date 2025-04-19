@@ -43,13 +43,14 @@
             <div class="card-tools">
                 {{-- <a href="{{ url('/stok/create') }}" class="btn btn-primary">Tambah
                     Data</a> --}}
-                <a href="{{ url('/stok/export_pdf') }}" class="btn btn-sm btn-warning"><i class="fa fa-file-pdf"></i>
+                <a href="{{ url('/stok/export_pdf') }}" class="btn btn-sm btn-warning mt-1"><i class="fa fa-file-pdf"></i>
                     Export Stok</a>
-                <a href="{{ url('/stok/export_excel') }}" class="btn btn-sm btn-primary"><i class="fa fa-file-excel"></i>
+                <a href="{{ url('/stok/export_excel') }}" class="btn btn-sm btn-primary mt-1"><i class="fa fa-file-excel"></i>
                     Export
                     Stok</a>
-                <button onclick="modalAction('{{ url('/stok/import') }}')" class="btn btn-sm btn-info">Import Stok</button>
-                <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-sm btn-success">Tambah
+                <button onclick="modalAction('{{ url('/stok/import') }}')" class="btn btn-sm btn-info mt-1">Import Stok</button>
+                <button onclick="modalAction('{{ url('/stok/create_ajax') }}')" class="btn btn-sm btn-success mt-1"><i
+                        class="fa fa-plus"></i> Tambah
                     Stok</button>
             </div>
         </div>

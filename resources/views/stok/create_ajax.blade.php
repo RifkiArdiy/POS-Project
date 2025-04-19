@@ -24,10 +24,10 @@
                 <div class="form-group">
                     <label>User</label>
                     <select name="user_id" id="user_id" class="form-control" required>
-                        <option value="">- Pilih User -</option>
-                        @foreach ($user as $u)
+                        <option value="{{ auth()->user()->user_id }}">{{ auth()->user()->nama }}</option>
+                        {{-- @foreach ($user as $u)
                             <option value="{{ $u->user_id }}">{{ $u->nama }}</option>
-                        @endforeach
+                        @endforeach --}}
                     </select>
                     <small id="error-user_id" class="error-text form-text text-danger"></small>
                 </div>

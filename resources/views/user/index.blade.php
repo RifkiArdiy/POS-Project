@@ -15,7 +15,8 @@
                     User</a>
                 <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-sm btn-info mt-1">Import
                     User</button>
-                <button onclick="modalAction('{{url('user/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
+                <button onclick="modalAction('{{url('user/create_ajax')}}')" class="btn btn-sm btn-success mt-1"><i
+                        class="fa fa-plus"></i>Tambah
                     User</button>
             </div>
         </div>

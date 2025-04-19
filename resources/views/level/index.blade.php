@@ -45,7 +45,8 @@
                     Level</a>
                 <button onclick="modalAction('{{url('level/import')}}')" class="btn btn-sm btn-info mt-1">Import
                     Level</button>
-                <button onclick="modalAction('{{url('level/create_ajax')}}')" class="btn btn-sm btn-success mt-1">Tambah
+                <button onclick="modalAction('{{url('level/create_ajax')}}')" class="btn btn-sm btn-success mt-1"><i
+                        class="fa fa-plus"></i>Tambah
                     Level</button>
             </div>
         </div>
