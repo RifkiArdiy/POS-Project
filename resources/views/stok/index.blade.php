@@ -61,7 +61,8 @@
                         <div class="form-group form-group-sm row text-sm mb-0">
                             <label for="filter_date" class="col-md-1 col-form-label">Filter</label>
                             <div class="col-md-3">
-                                <select name="filter_supplier" id="filter_supplier" class="form-control form-control-sm filter_supplier">
+                                <select name="filter_supplier" id="filter_supplier"
+                                    class="form-control form-control-sm filter_supplier">
                                     <option value="">- Semua -</option>
                                     @foreach($supplier as $l)
                                         <option value="{{ $l->supplier_id }}">{{ $l->supplier_nama }}</option>
@@ -128,6 +129,7 @@
                     // data: "No_Urut",
                     data: "DT_RowIndex",
                     className: "text-center",
+                    width: "5%",
                     orderable: false,
                     searchable: false
                 }, {
@@ -154,7 +156,16 @@
                     data: "stok_tanggal_masuk",
                     className: "text-center",
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    render: function (data, type, row) {
+                        // Format dari 2015-02-25 jadi 25-02-2015
+                        if (!data) return '';
+                        const date = new Date(data);
+                        const day = ('0' + date.getDate()).slice(-2);
+                        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                        const year = date.getFullYear();
+                        return `${day}-${month}-${year}`;
+                    }
                 }, {
                     data: "aksi",
                     className: "text-center",

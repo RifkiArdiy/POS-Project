@@ -188,7 +188,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
             Route::post('/list', [PenjualanController::class, 'list']);
             Route::get('/create', [PenjualanController::class, 'create']);
-            Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
+            // Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
+            Route::post('/store2', [PenjualanController::class, 'store2'])->name('penjualan.store2');
             Route::get('/create_ajax', [PenjualanController::class, 'create_ajax']);
             Route::post('/ajax', [PenjualanController::class, 'store_ajax']);
             Route::get('/{id}', [PenjualanController::class, 'show']);

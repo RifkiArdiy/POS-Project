@@ -14,7 +14,7 @@ class PenjualanDetailModel extends Model
 
     protected $primaryKey = 'detail_id';
 
-    protected $fillable = ['penjualan_id', 'barang_id', 'harga', 'jumlah'];
+    protected $fillable = ['penjualan_id', 'barang_id', 'harga_barang', 'jumlah_barang'];
 
     public function penjualan(): BelongsTo
     {
