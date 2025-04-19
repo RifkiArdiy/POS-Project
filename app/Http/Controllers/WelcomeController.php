@@ -28,10 +28,17 @@ class WelcomeController extends Controller
         ->with('level')
         ->get();
 
-        $userByLevel = UserModel::select('m_level.level_nama', DB::raw('COUNT(*) as total'))
-            ->join('m_level', 'm_level.level_id', '=', 'm_user.level_id')
-            ->groupBy('m_level.level_nama')
-            ->get();
+        // $userByLevel = UserModel::select('m_level.level_nama', DB::raw('COUNT(*) as total'))
+        //     ->join('m_level', 'm_level.level_id', '=', 'm_user.level_id')
+        //     ->groupBy('m_level.level_nama')
+        //     ->get();
+        $barangTerjual = DB::table('t_penjualan_detail')
+        ->join('m_barang', 'm_barang.barang_id', '=', 't_penjualan_detail.barang_id')
+        ->select('m_barang.barang_nama', DB::raw('SUM(t_penjualan_detail.jumlah_barang) as total'))
+        ->groupBy('m_barang.barang_nama')
+        ->orderByDesc('total')
+        ->get();
+    
 
         $penjualanDetail = PenjualanDetailModel::select(
             DB::raw('MONTH(created_at) as bulan'),
@@ -61,7 +68,7 @@ class WelcomeController extends Controller
         $totalPenjualan = PenjualanDetailModel::sum(DB::raw('harga_barang * jumlah_barang'));
         $activeMenu = 'dashboard';
         
-        return view('welcome', compact('breadcrumb', 'userByLevel', 'penjualanDetail', 'penjualanTerakhir', 'totalUser', 'totalPenjualan', 'totalStok', 'activeMenu'));
+        return view('welcome', compact('breadcrumb', 'barangTerjual', 'penjualanDetail', 'penjualanTerakhir', 'totalUser', 'totalPenjualan', 'totalStok', 'activeMenu'));
     }
 
     

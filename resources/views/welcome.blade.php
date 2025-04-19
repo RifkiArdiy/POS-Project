@@ -44,7 +44,7 @@
             <!-- USERS LIST -->
             <div class="card">
                 <div class="card-header border-transparent">
-                    <h3 class="card-title">Latest Orders</h3>
+                    <h3 class="card-title">Penjualan Terakhir</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -93,7 +93,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Pie Chart User</h3>
+                    <h3 class="card-title">Barang Terjual</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
@@ -123,8 +123,8 @@
             type: 'bar',
             data: {
                 labels: {!! json_encode($penjualanDetail->pluck('tanggal')->map(function ($tgl) {
-                    return \Carbon\Carbon::parse($tgl)->format('d F'); // contoh: 01 January
-                })) !!},
+        return \Carbon\Carbon::parse($tgl)->format('d F'); // contoh: 01 January
+    })) !!},
                 datasets: [{
                     label: 'Jumlah Penjualan Detail per Hari',
                     data: {!! json_encode($penjualanDetail->pluck('total')) !!},
@@ -142,7 +142,8 @@
             }
         });
     </script>
-    
+
+    {{--
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const pieCtx = document.getElementById('pieChart').getContext('2d');
@@ -150,15 +151,62 @@
             const pieChart = new Chart(pieCtx, {
                 type: 'pie',
                 data: {
-                    labels: {!! json_encode($userByLevel->pluck('level_nama')) !!},
+                    labels: {!! json_encode($userByLevel-> pluck('level_nama'))!!
+        },
+            datasets: [{
+                data: {!! json_encode($userByLevel-> pluck('total'))!!},
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',    // merah
+            'rgba(54, 162, 235, 0.7)',    // biru
+            'rgba(255, 206, 86, 0.7)',    // kuning
+            'rgba(75, 192, 192, 0.7)',    // hijau
+            'rgba(153, 102, 255, 0.7)'    // ungu
+        ],
+            borderColor: '#fff',
+                borderWidth: 1
+                        }]
+                    },
+        options: {
+            responsive: true,
+                plugins: {
+                legend: {
+                    position: 'bottom',
+                        labels: {
+                        color: '#ffffff' // <- ini buat warna teks di legend (putih)
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            return `${label}: ${value} user`;
+                        }
+                    }
+                }
+            }
+        }
+                });
+            });
+    </script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+
+            const pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: {!! json_encode($barangTerjual->pluck('barang_nama')) !!},
                     datasets: [{
-                        data: {!! json_encode($userByLevel->pluck('total')) !!},
+                        data: {!! json_encode($barangTerjual->pluck('total')) !!},
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.7)',    // merah
-                            'rgba(54, 162, 235, 0.7)',    // biru
-                            'rgba(255, 206, 86, 0.7)',    // kuning
-                            'rgba(75, 192, 192, 0.7)',    // hijau
-                            'rgba(153, 102, 255, 0.7)'    // ungu
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(199, 199, 199, 0.7)'
                         ],
                         borderColor: '#fff',
                         borderWidth: 1
@@ -170,7 +218,7 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-                                color: '#ffffff' // <- ini buat warna teks di legend (putih)
+                                color: '#ffffff'
                             }
                         },
                         tooltip: {
@@ -178,7 +226,7 @@
                                 label: function (context) {
                                     let label = context.label || '';
                                     let value = context.raw || 0;
-                                    return `${label}: ${value} user`;
+                                    return `${label}: ${value} terjual`;
                                 }
                             }
                         }
