@@ -78,7 +78,7 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Penjualan Kode</th>
+                        <th>Invoice</th>
                         <th>Nama Kasir</th>
                         <th>Pembeli</th>
                         <th>Penjualan Tanggal</th>
