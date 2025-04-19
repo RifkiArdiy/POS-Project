@@ -187,9 +187,10 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'penjualan'], function () {
             Route::get('/', [PenjualanController::class, 'index'])->name('penjualan.index');
             Route::post('/list', [PenjualanController::class, 'list']);
-            Route::get('/create', [PenjualanController::class, 'create']);
+            Route::get('/create', [PenjualanController::class, 'create'])->name('penjualan.create');
             // Route::post('/', [PenjualanController::class, 'store'])->name('penjualan.store');
             Route::post('/store2', [PenjualanController::class, 'store2'])->name('penjualan.store2');
+            Route::get('/{id}/show', [PenjualanController::class, 'show']);
             Route::get('/create_ajax', [PenjualanController::class, 'create_ajax']);
             Route::post('/ajax', [PenjualanController::class, 'store_ajax']);
             Route::get('/{id}', [PenjualanController::class, 'show']);
@@ -205,6 +206,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export_excel', [PenjualanController::class, 'export_excel']);
             Route::get('/export_pdf', [PenjualanController::class, 'export_pdf']);
             Route::get('/{id}/show_ajax', [PenjualanController::class, 'show_ajax']);
+            Route::get('/{id}/print_receipt', [PenjualanController::class, 'print_receipt']);
         });
     });
 

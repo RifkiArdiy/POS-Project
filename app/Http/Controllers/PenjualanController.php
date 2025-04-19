@@ -8,6 +8,7 @@ use App\Models\PenjualanDetailModel;
 use App\Models\PenjualanModel;
 use App\Models\StokModel;
 use App\Models\UserModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
@@ -70,7 +71,8 @@ class PenjualanController extends Controller
             ->addColumn('aksi', function ($penjualans) {
                 // Tombol Detail, Edit, dan Hapus
                 $btn = '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<a href="' . url('/penjualan/' . $penjualans->penjualan_id . '/receipt_pdf') . '" class="btn btn-sm btn-warning mr-1">Cetak Struk</a>';
+                $btn .= '<a href="' . url('/penjualan/' . $penjualans->penjualan_id . '/print_receipt') . '" class="btn btn-sm btn-warning mr-1">Cetak Struk</a>';
+                $btn .= '<a href="' . url('/penjualan/' . $penjualans->penjualan_id . '/show') . '" class="btn btn-sm btn-warning mr-1">show</a>';
                 $btn .= '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
 
                 return $btn;
@@ -311,6 +313,25 @@ class PenjualanController extends Controller
     public function show(string $id)
     {
         //
+        $penjualan = PenjualanModel::with('user')->find($id);
+
+        $breadcrumb = (object) [
+            'title' => 'Detail Penjualan',
+            'list' => ['Home', 'Penjualan', 'Detail']
+        ];
+
+        $page = (object) [
+            'title' => 'Detail penjualan'
+        ];
+
+        $activeMenu = 'penjualan';
+
+        return view('penjualan.show', [
+            'breadcrumb' => $breadcrumb,
+            'page' => $page,
+            'penjualan' => $penjualan,
+            'activeMenu' => $activeMenu
+        ]);
     }
 
     /**
@@ -336,4 +357,38 @@ class PenjualanController extends Controller
     {
         //
     }
+
+    // public function show_ajax($id)
+    // {
+    //     // $penjualan = PenjualanModel::with(['user', 'penjualanDetail.barang'])->find($id);
+
+    //     // $penjualanDetail = $penjualan->penjualanDetail;
+    //     $penjualanDetail = PenjualanModel::find($id);
+
+    //     return view('penjualan.show_ajax', ['penjualanDetail' => $penjualanDetail]);
+    // }
+
+    // PenjualanController.php
+    public function show_ajax(string $id)
+    {
+        $penjualan = PenjualanModel::with(['user', 'penjualanDetails.barang'])->find($id);
+
+        $penjualanDetails = $penjualan->penjualanDetails;
+
+        return view('penjualan.show_ajax', ['penjualanDetails' => $penjualanDetails]);
+    }
+
+    public function print_receipt($id)
+    {
+        $penjualan = PenjualanModel::with(['user', 'penjualanDetails.barang'])
+            ->find($id);
+
+        $pdf = Pdf::loadView('penjualan.receipt', compact('penjualan'));
+        $pdf->setPaper('A6', 'portrait');
+        $pdf->setOption('isRemoteEnabled', true);
+
+        $filename = 'Struk_' . $penjualan->penjualan_kode . '.pdf';
+        return $pdf->stream($filename);
+    }
+
 }
