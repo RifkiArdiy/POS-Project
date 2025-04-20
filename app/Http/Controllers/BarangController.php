@@ -62,12 +62,7 @@ class BarangController extends Controller
             'harga_jual',
             'kategori_id'
         )
-            ->with('kategori'); // relasi ke tabel kategori
-
-        // Filter data berdasarkan kategori_id
-        // if ($request->kategori_id) {
-        //     $barang->where('kategori_id', $request->kategori_id);
-        // }
+            ->with('kategori', 'stok'); // relasi ke tabel kategori
 
         if ($request->filter_kategori) {
             $barang->where('kategori_id', $request->filter_kategori);
@@ -75,24 +70,11 @@ class BarangController extends Controller
 
         return DataTables::of($barang)
             ->addIndexColumn() // kolom DT_RowIndex
+            ->addColumn('total_stok', function ($barang) {
+                // Calculate total stock from related stok data
+                return $barang->stok->sum('stok_jumlah');
+            })
             ->addColumn('aksi', function ($barang) {
-                // Tombol Detail, Edit, dan Hapus
-                // $btn = '<a href="' . url('/barang/' . $brg->barang_id) . '"
-                //             class="btn btn-info btn-sm">Detail</a> ';
-    
-                // $btn .= '<a href="' . url('/barang/' . $brg->barang_id . '/edit') . '"
-                //             class="btn btn-warning btn-sm">Edit</a> ';
-    
-                // $btn .= '<form class="d-inline-block" method="POST"
-                //             action="' . url('/barang/' . $brg->barang_id) . '">'
-                //     . csrf_field()
-                //     . method_field('DELETE')
-                //     . '<button type="submit" class="btn btn-danger btn-sm"
-                //             onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">
-                //             Hapus
-                //           </button></form>';
-                // return $btn;
-    
                 $btn = '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
                 $btn .= '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';

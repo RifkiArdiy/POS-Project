@@ -85,9 +85,10 @@
                         <th>#</th>
                         <th>Kode Penjualan</th>
                         <th>Barang</th>
-                        <th>Jumlah Barang</th>
                         <th>Harga Barang</th>
-                        <th>Aksi</th>
+                        <th>Jumlah</th>
+                        <th>Subtotal</th>
+                        {{-- <th>Aksi</th> --}}
                     </tr>
                 </thead>
             </table>
@@ -130,6 +131,7 @@
                         data: "penjualan.penjualan_kode",
                         className: "",
                         // orderable: true, jika ingin kolom ini bisa diurutkan
+                        width: "20%",
                         orderable: true,
                         // searchable: true, jika ingin kolom ini bisa dicari
                         searchable: true
@@ -137,25 +139,49 @@
                         data: "barang.barang_nama",
                         className: "",
                         // orderable: true, jika ingin kolom ini bisa diurutkan
+                        width: "20%",
                         orderable: true,
                         // searchable: true, jika ingin kolom ini bisa dicari
                         searchable: true
                     }, {
-                        data: "jumlah_barang",
-                        className: "",
-                        orderable: true,
-                        searchable: true
-                    }, {
                         data: "harga_barang",
                         className: "",
+                        width: "15%",
+                        orderable: true,
+                        searchable: true,
+                        render: function (data, type, row) {
+                            return new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                                minimumFractionDigits: 0
+                            }).format(data);
+                        }
+                    }, {
+                        data: "jumlah_barang",
+                        className: "text-center",
+                        width: "10%",
                         orderable: false,
                         searchable: false
                     }, {
-                        data: "aksi",
-                        className: "text-center",
+                        data: "subtotal",
+                        className: "",
+                        width: "15%",
                         orderable: false,
-                        searchable: false
+                        searchable: false,
+                        render: function (data, type, row) {
+                            return new Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR',
+                                minimumFractionDigits: 0
+                            }).format(data);
+                        }
                     }
+                    // }, {
+                    //     data: "aksi",
+                    //     className: "text-center",
+                    //     orderable: false,
+                    //     searchable: false
+                    // }
                 ]
             });
             $('#level_id').on('change', function () {

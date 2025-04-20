@@ -54,6 +54,11 @@ class PenjualanDetailController extends Controller
 
         return DataTables::of($details)
             ->addIndexColumn()
+            ->addColumn('subtotal', function ($penjualan_detail) {
+                $subtotal = $penjualan_detail->harga_barang * $penjualan_detail->jumlah_barang;
+                return $subtotal;   
+                // return number_format($subtotal, 0, ',', '.');
+            })
             ->addColumn('aksi', function ($penjualan_detail) {
 
                 // $btn = '<button onclick="modalAction(\'' . url('/penjualan_detail/' . $penjualan_detail->detail_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';

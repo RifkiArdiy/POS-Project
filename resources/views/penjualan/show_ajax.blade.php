@@ -1,6 +1,5 @@
-
 @php
-    $details = $penjualanDetail; // Koleksi detail penjualan
+    $details = $penjualanDetails; // Koleksi detail penjualan
 @endphp
 
 @if($details->isEmpty())
@@ -67,24 +66,33 @@
                         <tr>
                             <th>ID Detail</th>
                             <th>Nama Barang</th>
-                            <th>Jumlah</th>
                             <th>Harga</th>
+                            <th>Jumlah</th>
+                            <th>Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $total = 0;
+                        @endphp
                         @foreach($details as $detail)
-                        <tr>
-                            <td>{{ $detail->detail_id }}</td>
-                            <td>{{ $detail->barang->barang_nama }}</td>
-                            <td>{{ $detail->jumlah }}</td>
-                            <td>{{ 'Rp' . number_format($detail->harga, 0, ',', '.') }}</td>
-                        </tr>
+                                        @php
+                                            $subtotal = $detail->barang->harga_jual * $detail->jumlah_barang;
+                                            $total += $subtotal;
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $detail->detail_id }}</td>
+                                            <td>{{ $detail->barang->barang_nama }}</td>
+                                            <td>{{ 'Rp' . number_format($detail->harga_barang, 0, ',', '.') }}</td>
+                                            <td>{{ $detail->jumlah_barang }}</td>
+                                            <td>{{ 'Rp' . number_format($subtotal, 0, ',', '.') }}</td>
+                                        </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="3" class="text-end">Total Harga</th>
-                            <th>{{ 'Rp. ' . number_format($totalHarga, 0, ',', '.') }}</th>
+                            <th colspan="4" class="text-end">Total Harga</th>
+                            <th>{{ 'Rp. ' . number_format($total, 0, ',', '.') }}</th>
                         </tr>
                     </tfoot>
                 </table>

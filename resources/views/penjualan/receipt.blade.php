@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -9,14 +10,36 @@
             margin: 0;
             padding: 5px;
         }
-        .text-center { text-align: center; }
-        .text-right  { text-align: right; }
-        .text-left   { text-align: left; }
-        .border-top  { border-top: 1px dashed #000; margin: 5px 0; }
-        table { width: 100%; border-collapse: collapse; }
-        td, th { padding: 2px 0; }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .border-top {
+            border-top: 1px dashed #000;
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            padding: 2px 0;
+        }
     </style>
 </head>
+
 <body>
     <div class="text-center">
         <strong>Sigma Mart</strong><br>
@@ -46,15 +69,22 @@
     </table>
 
     <div class="border-top"></div>
-
+    @php
+        $total = 0;
+    @endphp
     @foreach($penjualan->penjualanDetails as $detail)
-        <div>
-            {{ $detail->barang->barang_nama }}<br>
-            {{ number_format($detail->barang->harga_jual, 0, ',', '.') }} x {{ $detail->jumlah_barang }} 
-            <span class="text-right" style="float: right">
-                {{ number_format($detail->harga_barang, 0, ',', '.') }}
-            </span>
-        </div>
+            @php
+                $subtotal = $detail->barang->harga_jual * $detail->jumlah_barang;
+                $total += $subtotal;
+            @endphp
+            <div>
+                {{ $detail->barang->barang_nama }}<br>
+                {{ number_format($detail->barang->harga_jual, 0, ',', '.') }} x {{ $detail->jumlah_barang }}
+                <span class="text-right" style="float: right">
+                    {{-- {{ number_format($detail->harga_barang * $detail->jumlah_barang, 0, ',', '.') }} --}}
+                    {{ number_format($subtotal, 0, ',', '.') }}
+                </span>
+            </div>
     @endforeach
 
     <div class="border-top"></div>
@@ -62,7 +92,7 @@
     <table>
         <tr>
             <td><strong>Total</strong></td>
-            <td class="text-right"><strong>{{ number_format($penjualan->penjualanDetails->sum('harga_barang'), 0, ',', '.') }}</strong></td>
+            <td class="text-right"><strong>{{ number_format($total, 0, ',', '.') }}</strong></td>
         </tr>
     </table>
 
@@ -74,4 +104,5 @@
         tidak dapat dikembalikan.<br>
     </div>
 </body>
+
 </html>

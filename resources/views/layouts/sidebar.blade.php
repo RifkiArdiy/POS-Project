@@ -115,13 +115,13 @@
                             <p>Stok Masuk</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{ url('/penjualan_detail') }}"
                             class="nav-link {{ ($activeMenu == 'penjualan_detail') ? 'active' : '' }}">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Stok Keluar</p>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             <li class="nav-item">

@@ -73,11 +73,11 @@ class PenjualanController extends Controller
             ->addIndexColumn() // kolom DT_RowIndex
             ->addColumn('aksi', function ($penjualans) {
                 // Tombol Detail, Edit, dan Hapus
-                // $btn = '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn = '<a href="' . url('/penjualan/' . $penjualans->penjualan_id . '/print_receipt') . '" class="btn btn-sm btn-warning mr-1">Cetak Struk</a>';
+                $btn = '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<a href="' . url('/penjualan/' . $penjualans->penjualan_id . '/print_receipt') . '" class="btn btn-sm btn-warning mr-1">Cetak Struk</a>';
                 // $btn .= '<a href="' . url('/penjualan/' . $penjualans->penjualan_id . '/show') . '" class="btn btn-sm btn-warning mr-1">show</a>';
                 // $btn .= '<button onclick="modalAction(\'' . url('/penjualan/' . $penjualans->penjualan_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
-
+    
                 return $btn;
             })
             ->editColumn('tanggal_penjualan', function ($data) {
@@ -101,13 +101,6 @@ class PenjualanController extends Controller
             'title' => 'Transaksi Baru'
         ];
 
-        // $stokBarang = DB::table('m_barang')
-        //     ->join('t_stok', 'm_barang.barang_id', '=', 't_stok.barang_id')
-        //     ->select('m_barang.*', DB::raw('SUM(t_stok.stok_jumlah) as total_stok'))
-        //     ->groupBy('m_barang.barang_id')
-        //     ->havingRaw('SUM(t_stok.stok_jumlah) > 0')
-        //     ->get();
-
         $stokBarang = StokModel::join('m_barang', 'm_barang.barang_id', '=', 't_stok.barang_id')
             ->select('m_barang.barang_id', 'm_barang.barang_nama', 'm_barang.harga_jual', 'm_barang.barang_kode', 't_stok.stok_jumlah')
             ->get();
@@ -123,18 +116,6 @@ class PenjualanController extends Controller
             // Menghitung stok yang tersedia
             $item->stok_tersedia = $stokMasuk - $stokKeluar;
         }
-
-        // $stokBarang = DB::table('t_stok')
-        //     ->join('m_barang', 'm_barang.barang_id', '=', 't_stok.barang_id')
-        //     ->select(
-        //         'm_barang.barang_id',
-        //         'm_barang.barang_kode',
-        //         'm_barang.barang_nama',
-        //         'm_barang.harga_jual',
-        //         DB::raw('SUM(t_stok.stok_jumlah) as stok_tersedia')
-        //     )
-        //     ->groupBy('m_barang.barang_id', 'm_barang.barang_kode', 'm_barang.barang_nama', 'm_barang.harga_jual')
-        //     ->get();
 
         $activeMenu = 'penjualan';
 
@@ -233,19 +214,6 @@ class PenjualanController extends Controller
 
         DB::beginTransaction();
         try {
-            // Validasi stok untuk setiap barang yang dijual
-            // foreach ($keranjang as $item) {
-            //     $barang_id = $item['barang_id'];
-            //     $qty = $item['qty'];
-
-            //     // Menghitung stok yang tersedia
-            //     $stokTersedia = $this->getStokTersedia($barang_id);
-
-            //     // Cek apakah stok mencukupi
-            //     if ($qty > $stokTersedia) {
-            //         throw new \Exception("Stok untuk barang ID {$barang_id} tidak cukup!");
-            //     }
-            // }
 
             foreach ($keranjang as $item) {
                 $barang_id = $item['barang_id'];
@@ -268,23 +236,6 @@ class PenjualanController extends Controller
                 'penjualan_kode' => $kode,
                 'tanggal_penjualan' => now(),
             ]);
-
-            // Simpan detail penjualan dan update stok
-            // foreach ($keranjang as $item) {
-            //     $detailPenjualan = PenjualanDetailModel::create([
-            //         'penjualan_id' => $penjualan->penjualan_id,
-            //         'barang_id' => $item['barang_id'],
-            //         'jumlah_barang' => $item['qty'],
-            //         'harga_barang' => $item['harga'],
-            //     ]);
-
-            //     // Update stok (mengurangi stok setelah penjualan)
-            //     $stok = StokModel::where('barang_id', $item['barang_id'])->first();
-            //     if ($stok) {
-            //         // Jika ada stok yang tersedia, kurangi jumlahnya
-            //         $stok->decrement('stok_jumlah', $item['qty']);
-            //     }
-            // }
 
             foreach ($keranjang as $item) {
                 PenjualanDetailModel::create([
@@ -542,18 +493,18 @@ class PenjualanController extends Controller
             ]);
         }
     }
-        
+
     public function export_excel()
     {
         // Ambil data penjualan dengan relasi user dan detail barang
         $penjualans = PenjualanModel::with(['user', 'penjualanDetails.barang'])
             ->orderBy('penjualan_id')
             ->get();
-    
+
         // Load library spreadsheet
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-    
+
         // Header kolom
         $sheet->setCellValue('A1', 'No');
         $sheet->setCellValue('B1', 'Kode Penjualan');
@@ -562,20 +513,20 @@ class PenjualanController extends Controller
         $sheet->setCellValue('E1', 'Pembeli');
         $sheet->setCellValue('F1', 'Jumlah Item');
         $sheet->setCellValue('G1', 'Total Harga');
-    
+
         // Buat header bold
         $sheet->getStyle('A1:G1')->getFont()->setBold(true);
-    
+
         // Loop data dan isi ke sheet
         $baris = 2;
         $no = 1;
-    
+
         foreach ($penjualans as $penjualan) {
             $jumlah_item = $penjualan->penjualanDetails->sum('jumlah_barang');
             $total_harga = $penjualan->penjualanDetails->sum(function ($detail) {
                 return $detail->harga_barang * $detail->jumlah_barang;
             });
-    
+
             $sheet->setCellValue('A' . $baris, $no++);
             $sheet->setCellValue('B' . $baris, $penjualan->penjualan_kode);
             $sheet->setCellValue('C' . $baris, \Carbon\Carbon::parse($penjualan->tanggal_penjualan)->format('d-m-Y'));
@@ -583,21 +534,21 @@ class PenjualanController extends Controller
             $sheet->setCellValue('E' . $baris, $penjualan->pembeli);
             $sheet->setCellValue('F' . $baris, $jumlah_item);
             $sheet->setCellValue('G' . $baris, $total_harga);
-    
+
             $baris++;
         }
-    
+
         // Set auto width untuk semua kolom
         foreach (range('A', 'G') as $columnID) {
             $sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
-    
+
         $sheet->setTitle('Data Penjualan');
-    
+
         // Tulis file Excel ke output
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
         $filename = 'Data_Penjualan_' . date('Y-m-d_H-i-s') . '.xlsx';
-    
+
         // Header untuk download file
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
@@ -606,10 +557,10 @@ class PenjualanController extends Controller
         header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Cache-Control: cache, must-revalidate');
         header('Pragma: public');
-    
+
         $writer->save('php://output');
         exit;
-    }    
+    }
 
     public function export_pdf()
     {

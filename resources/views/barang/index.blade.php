@@ -161,7 +161,8 @@
                     Data</a> --}}
                 <a href="{{ url('/barang/export_pdf') }}" class="btn btn-sm btn-warning mt-1"><i class="fa fa-file-pdf"></i>
                     Export Barang</a>
-                <a href="{{ url('/barang/export_excel') }}" class="btn btn-sm btn-primary mt-1"><i class="fa fa-file-excel"></i>
+                <a href="{{ url('/barang/export_excel') }}" class="btn btn-sm btn-primary mt-1"><i
+                        class="fa fa-file-excel"></i>
                     Export
                     Barang</a>
                 <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-sm btn-info mt-1">Import
@@ -207,6 +208,7 @@
                         <th>Harga Beli</th>
                         <th>Harga Jual</th>
                         <th>Kategori</th>
+                        <th>Jumlah stok</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -265,21 +267,41 @@
                     className: "",
                     orderable: true,
                     searchable: false,
+                    // render: function (data, type, row) {
+                    //     return new Intl.NumberFormat('id-ID').format(data);
+                    // }
                     render: function (data, type, row) {
-                        return new Intl.NumberFormat('id-ID').format(data);
+                        return new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                            minimumFractionDigits: 0
+                        }).format(data);
                     }
                 }, {
                     data: "harga_jual",
                     className: "",
                     orderable: true,
                     searchable: false,
+                    // render: function (data, type, row) {
+                    //     return new Intl.NumberFormat('id-ID').format(data);
+                    // }
                     render: function (data, type, row) {
-                        return new Intl.NumberFormat('id-ID').format(data);
+                        return new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                            minimumFractionDigits: 0
+                        }).format(data);
                     }
                 }, {
                     data: "kategori.kategori_nama",
                     className: "",
                     orderable: true,
+                    searchable: false
+
+                },{
+                    data: "total_stok", // New column for total stock
+                    className: "text-center",
+                    orderable: false,
                     searchable: false
                 }, {
                     data: "aksi",

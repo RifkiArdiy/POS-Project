@@ -91,23 +91,23 @@
                         </thead>
                         <tbody>
                             @foreach($stokBarang as $item)
-                                <tr>
-                                    <td>{{ $item->barang_kode }}</td>
-                                    <td>{{ $item->barang_nama }}</td>
-                                    <td>{{ number_format($item->harga_jual) }}</td>
-                                    <td>{{ $item->stok_jumlah }}</td>
-                                    <td>
-                                        <input type="number" class="form-control qtyInput" value="1" min="1"
-                                            data-barang-id="{{ $item->barang_id }}">
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-sm btnPilihBarang"
-                                            data-id="{{ $item->barang_id }}" data-nama="{{ $item->barang_nama }}"
-                                            data-harga="{{ $item->harga_jual }}">
-                                            Tambah
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{{ $item->barang_kode }}</td>
+                                <td>{{ $item->barang_nama }}</td>
+                                <td>{{ number_format($item->harga_jual) }}</td>
+                                <td>{{ $item->stok_jumlah }}</td>
+                                <td>
+                                    <input type="number" class="form-control qtyInput" value="1" min="1"
+                                        data-barang-id="{{ $item->barang_id }}">
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-sm btnPilihBarang"
+                                        data-id="{{ $item->barang_id }}" data-nama="{{ $item->barang_nama }}"
+                                        data-harga="{{ $item->harga_jual }}">
+                                        Tambah
+                                    </button>
+                                </td>
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -129,14 +129,14 @@
                 let subtotal = item.harga * item.qty;
                 total += subtotal;
                 tbody.append(`
-                    <tr>
-                        <td>${item.nama}</td>
-                        <td>Rp ${item.harga.toLocaleString()}</td>
-                        <td>${item.qty}</td>
-                        <td>Rp ${subtotal.toLocaleString()}</td>
-                        <td><button type="button" class="btn btn-danger btn-sm" onclick="hapusItem(${index})">Hapus</button></td>
-                    </tr>
-                `);
+                        <tr>
+                            <td>${item.nama}</td>
+                            <td>Rp ${item.harga.toLocaleString()}</td>
+                            <td>${item.qty}</td>
+                            <td>Rp ${subtotal.toLocaleString()}</td>
+                            <td><button type="button" class="btn btn-danger btn-sm" onclick="hapusItem(${index})">Hapus</button></td>
+                        </tr>
+                    `);
             });
             $('#totalHarga').text(`Rp ${total.toLocaleString()}`);
             $('#dataTransaksi').val(JSON.stringify(keranjang));
