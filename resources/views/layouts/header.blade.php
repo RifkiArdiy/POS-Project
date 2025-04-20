@@ -16,14 +16,14 @@
         <!-- User Info Dropdown -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button">
-                <img src="{{ asset('adminlte/dist/img/user2-160x160.jpg') }}" alt="User Image"
-                    class="img-size-32 img-circle elevation-2">
+                <img src="{{ asset('storage/' . (auth()->user()->foto_profile ?? 'uploads/profile/default-profile.jpg')) }}" alt="User Image"
+                    class="img-circle elevation-2" width="32" height="32">
                 <span class="ml-2 d-none d-md-inline">{{ auth()->user()->nama }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">{{ auth()->user()->nama }}</span>
                 <div class="dropdown-divider"></div>
-                <a href="{{ url('/profil') }}" class="dropdown-item">
+                <a href="{{ url('/profile') }}" class="dropdown-item">
                     <i class="fas fa-user mr-2"></i> Profil Saya
                 </a>
                 <div class="dropdown-divider"></div>

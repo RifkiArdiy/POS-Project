@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class="row">
+    {{-- <div class="row">
         <!-- Bento Boxes -->
         <a class="col-md-4 mb-3" href="{{ url('penjualan') }}">
             <div class="card text-dark h-100 shadow-sm card-outline card-primary">
@@ -29,13 +29,41 @@
                 </div>
             </div>
         </a>
-    </div>
+    </div> --}}
     <!-- Chart -->
-    <div class="col">
-        <div class="card">
-            <div class="card-header">Total Penjualan Detail per Bulan</div>
-            <div class="card-body">
-                <canvas id="penjualanChart"></canvas>
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header border-transparent">
+                    <h3 class="card-title">Penjualan Detail per Bulan</h3>
+
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{-- <canvas id="penjualanChart"></canvas> --}}
+                    <select id="chartType">
+                        <option value="line">Line</option>
+                        <option value="bar">Bar</option>
+                    </select>
+
+                    <select id="rangeFilter">
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="7days">Last 7 Days</option>
+                        <option value="30days">Last 30 Days</option>
+                        <option value="thismonth">This Month</option>
+                    </select>
+
+                    <canvas id="incomeChart" height="100"></canvas>
+
+                </div>
             </div>
         </div>
     </div>
@@ -112,83 +140,77 @@
         </div>
     </div>
     <!-- /.col -->
-
 @endsection
 
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('penjualanChart').getContext('2d');
-        const penjualanChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($penjualanDetail->pluck('tanggal')->map(function ($tgl) {
-        return \Carbon\Carbon::parse($tgl)->format('d F'); // contoh: 01 January
-    })) !!},
-                datasets: [{
-                    label: 'Jumlah Penjualan Detail per Hari',
-                    data: {!! json_encode($penjualanDetail->pluck('total')) !!},
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+        let chart;
+        const ctx = document.getElementById('incomeChart').getContext('2d');
+        function loadChart(range = '12months', type = 'line') {
+            fetch(`/income-by-range?range=${range}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error("Server error:", data.message);
+                        return;
                     }
-                }
-            }
-        });
-    </script>
 
-    {{--
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const pieCtx = document.getElementById('pieChart').getContext('2d');
+                    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                    const fullLabels = monthNames.map((m, i) => `${m} ${new Date().getFullYear()}`);
+                    const values = new Array(12).fill(0); // 12 bulan default 0
 
-            const pieChart = new Chart(pieCtx, {
-                type: 'pie',
-                data: {
-                    labels: {!! json_encode($userByLevel-> pluck('level_nama'))!!
-        },
-            datasets: [{
-                data: {!! json_encode($userByLevel-> pluck('total'))!!},
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',    // merah
-            'rgba(54, 162, 235, 0.7)',    // biru
-            'rgba(255, 206, 86, 0.7)',    // kuning
-            'rgba(75, 192, 192, 0.7)',    // hijau
-            'rgba(153, 102, 255, 0.7)'    // ungu
-        ],
-            borderColor: '#fff',
-                borderWidth: 1
-                        }]
-                    },
-        options: {
-            responsive: true,
-                plugins: {
-                legend: {
-                    position: 'bottom',
-                        labels: {
-                        color: '#ffffff' // <- ini buat warna teks di legend (putih)
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            let label = context.label || '';
-                            let value = context.raw || 0;
-                            return `${label}: ${value} user`;
+                    data.forEach(item => {
+                        const label = `${monthNames[item.bulan - 1]} ${item.tahun}`;
+                        const index = fullLabels.indexOf(label);
+                        if (index !== -1) {
+                            values[index] = item.total;
                         }
-                    }
-                }
-            }
-        }
+                    });
+
+                    if (chart) chart.destroy();
+
+                    chart = new Chart(ctx, {
+                        type: type,
+                        data: {
+                            labels: fullLabels,
+                            datasets: [{
+                                label: 'Total Income',
+                                data: values,
+                                borderColor: 'rgba(255, 159, 64, 1)',
+                                backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: type === 'line'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
                 });
-            });
-    </script> --}}
+        }
+
+        document.getElementById('rangeFilter').addEventListener('change', function () {
+            const range = this.value;
+            const type = document.getElementById('chartType').value;
+            loadChart(range, type);
+        });
+
+        document.getElementById('chartType').addEventListener('change', function () {
+            const type = this.value;
+            const range = document.getElementById('rangeFilter').value;
+            loadChart(range, type);
+        });
+
+        // Load default chart
+        loadChart();
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const pieCtx = document.getElementById('pieChart').getContext('2d');

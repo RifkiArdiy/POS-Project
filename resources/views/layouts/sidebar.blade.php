@@ -1,14 +1,27 @@
 <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    {{-- <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-            <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{ asset('storage/' . ($user->foto_profile ?? 'uploads/profile/default-profile.jpg')) }}"
+                class="img-circle elevation-2" width="5" height="5" alt="User Image">
         </div>
         <div class="info">
             <a href="#" class="d-block">{{ auth()->user()->nama }}</a>
         </div>
+    </div> --}}
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
+        <div class="image me-2">
+            <img src="{{ asset('storage/' . (auth()->user()->foto_profile ?? 'uploads/profile/default-profile.jpg')) }}"
+                alt="User Image"
+                width="40" height="40"
+                class="rounded-circle elevation-2"
+                style="object-fit: cover;">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block text-white">{{ auth()->user()->nama }}</a>
+        </div>
     </div>
-
+    
     <!-- SidebarSearch Form -->
     <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
@@ -55,8 +68,7 @@
                 </ul>
             </li>
             <li class="nav-item {{ in_array($activeMenu, ['kategori', 'barang']) ? 'menu-open' : '' }}">
-                <a href="#"
-                    class="nav-link {{ in_array($activeMenu, ['kategori', 'barang']) ? 'active' : '' }}">
+                <a href="#" class="nav-link {{ in_array($activeMenu, ['kategori', 'barang']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-boxes"></i>
                     <p>
                         Barang
@@ -79,7 +91,8 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item {{ in_array($activeMenu, ['penjualan', 'stok', 'penjualan_detail']) ? 'menu-open' : '' }}">
+            <li
+                class="nav-item {{ in_array($activeMenu, ['penjualan', 'stok', 'penjualan_detail']) ? 'menu-open' : '' }}">
                 <a href="#"
                     class="nav-link {{ in_array($activeMenu, ['penjualan', 'stok', 'penjualan_detail']) ? 'active' : '' }}">
                     <i class="nav-icon fas fa-shopping-cart"></i>

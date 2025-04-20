@@ -32,12 +32,12 @@ class PenjualanDetailController extends Controller
         // return view('penjualan_detail.index', ['data' => $data]);
 
         $breadcrumb = (object) [
-            'title' => 'Penjualan Detail',
-            'list' => ['Home', 'Penjualan Detail']
+            'title' => 'Stok Keluar',
+            'list' => ['Home', 'Stok Keluar']
         ];
 
         $page = (object) [
-            'title' => 'Daftar Penjualan Detail yang terdaftar dalam sistem'
+            'title' => 'Daftar Stok Keluar'
         ];
 
         $activeMenu = 'penjualan_detail';
